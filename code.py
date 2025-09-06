@@ -10,7 +10,6 @@ import framebufferio
 import rgbmatrix
 import adafruit_imageload
 import time
-import keypad
 from adafruit_display_shapes.rect import Rect
 
 ## Multiple panel guide
@@ -72,14 +71,6 @@ matrix = rgbmatrix.RGBMatrix(
 )
 
 display = framebufferio.FramebufferDisplay(matrix)
-
-# Get the display brightness (0.0 to 1.0)
-brightness = 0.05
-display.brightness = brightness
-
-
-# --- Setup buttons ---
-buttons = keypad.Keys((board.BUTTON_UP, board.BUTTON_DOWN), value_when_pressed=False, pull=True)
 
 # Colors
 # Online tool used to get the correct shade
@@ -245,16 +236,6 @@ rate_b = 2
 
 # --- Main loop ---
 while True:
-    event = buttons.events.get()
-    if event:
-        if event.pressed:
-            if event.key_number == 0:   # UP button
-                brightness = min(1.0, brightness + 0.05)
-                display.brightness = brightness
-            elif event.key_number == 1: # DOWN button
-                brightness = max(0.0, brightness - 0.05)
-                display.brightness = brightness
-    
     t = time.monotonic()
     if (p + 0.1) < t:
         p = t
